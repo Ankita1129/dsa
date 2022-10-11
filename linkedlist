@@ -1,0 +1,214 @@
+// Following is the Linked List program
+// Node class is created. The operations to test your program are also created.
+// DO not change/delete what is prewritten in the program.
+// Write you own code whereever it is instructed.
+// Printing the list and adding a function at the begining --- these both functions
+// are done for your reference. Please complete the following code correctly and
+// run the code to test each output.
+// Submit .cpp file on classroom (DO not submit pdf file or image file)
+
+#include <iostream>
+using namespace std;
+
+class Node
+{
+public: // access modifier
+    int data;
+    Node *next;
+
+    Node(int val)
+    {
+        data = val;
+        next = NULL;
+    }
+
+}; // Node class created.
+
+// Following function prints the linkedlist. The parameter is head of the linked list.
+void printlist(Node *head)
+{
+    while (head != NULL)
+    {
+        cout << head->data << " -> ";
+        head = head->next;
+    }
+    cout << " NULL\n";
+}
+
+//
+Node *insertAtBegining(Node *head, int val)
+{
+    Node *temp;
+    temp = new Node(val);
+
+    temp->next = head;
+    return (temp);
+}
+
+Node *insertAfterThis(Node *head, int afterthisvalue, int val)
+{
+    Node *naya;
+    Node *last = head;
+    naya = new Node(val);
+    // insert your code here
+    while (last->data != afterthisvalue)
+    {
+        last = last->next;
+    }
+    // cout << "presently kidhar hai ? : " << last->data << endl;
+    naya->next = last->next;
+    last->next = naya;
+    return (head);
+}
+
+Node *insertAtEnd(Node *head, int val)
+{
+    // insert your code here
+    Node *last = head;
+    Node *naya;
+    naya = new Node(val);
+    while (last->next != NULL)
+    {
+        last = last->next;
+    }
+    // cout << "presently end kidhar hai ? : " << last->data << endl;
+    last->next = naya;
+    return (head);
+}
+
+void search(Node *head, int val)
+{
+    int index = 1;
+    Node *last = head;
+    // insert your code here
+    while (last->data != val)
+    {
+        last = last->next;
+        index++;
+        if (last->next == NULL)
+        {
+            cout << "NOT FOUND";
+            return;
+        }
+    }
+    cout << "Index of the searched value : " << index << endl;
+    // This function should print the index of the found value or if not found, it shoud print not found in the linked list
+}
+
+Node *deletefirst(Node *head)
+{
+    // insert your code here
+    if (head == NULL)
+    {
+        return head;
+    }
+    Node *del = head;
+    head = head->next;
+    delete del;
+    return (head);
+}
+
+Node *deleteThisValue(Node *head, int val)
+{
+    // insert your code here
+    Node *ptr = head;
+    Node *ptr1 = head;
+    while (ptr->data != val)
+    {
+        ptr = ptr->next;
+        if (ptr->next == NULL)
+        {
+            cout << "deleting value NOT FOUND\n";
+            return (head);
+        }
+    }
+    while (ptr1->next->next != ptr->next)
+    {
+        ptr1 = ptr1->next;
+    }
+    ptr1->next = ptr->next;
+    delete ptr;
+    return (head);
+}
+
+Node *deleteAtEnd(Node *head)
+{
+    // insert your code here
+    Node *ptr = head;
+    Node *ptr1 = head;
+    while (ptr->next != NULL)
+    {
+        ptr = ptr->next;
+    }
+    while (ptr1->next->next != ptr->next)
+    {
+        ptr1 = ptr1->next;
+    }
+    ptr1->next = NULL;
+    delete ptr;
+    return (head);
+}
+
+int main()
+{
+    // creating five nodes
+    Node *one;
+    Node *two;
+    Node *three;
+    Node *four;
+    Node *five;
+    one = new Node(20);
+    two = new Node(30);
+    three = new Node(40);
+    four = new Node(50);
+    five = new Node(60);
+
+    // linking the nodes
+    one->next = two;
+    two->next = three;
+    three->next = four;
+    four->next = five;
+    five->next = NULL;
+
+    // printing the linked list
+    cout << "print one value: " << one << endl;
+    cout << "printlist 1st\n";
+    printlist(one);
+
+    // inserting a node at the begining.
+    one = insertAtBegining(one, 10);
+    cout << "\nprinting list after inserting the node at the begining.\n";
+    printlist(one);
+
+    // inserting a node after a particular node
+    one = insertAfterThis(one, 30, 100);
+    cout << "\nprinting list after inserting a node after a particular node\n";
+    printlist(one);
+
+    // inserting a new node at the end of the list
+    one = insertAtEnd(one, 70);
+    cout << "\n printing the list after inserting a new node at the end of the list\n";
+    printlist(one);
+
+    // searching a value in the linked list
+    cout << "\n\nSearching 24 in the linked list \n";
+    search(one, 24);
+    // searching a value in the linked list
+    cout << "\n\nSearching 100 in the linked list \n";
+    search(one, 100);
+
+    // deleting first node from linked list
+    one = deletefirst(one);
+    cout << "\n printing linked list after deleting first node from linked list\n";
+    printlist(one);
+
+    // deleting a particular value from linked list
+    one = deleteThisValue(one, 30);
+    cout << "\n printing linked list after deleting a value from linked list\n";
+    printlist(one);
+
+    // deleting last node of a linked list
+    one = deleteAtEnd(one);
+    cout << "\n printing linked list after deleting last node from the linked list\n";
+    printlist(one);
+}
